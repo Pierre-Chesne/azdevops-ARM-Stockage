@@ -25,3 +25,10 @@ stages:
                 **/rg.ps1
               TargetFolder: '$(build.artifactstagingdirectory)'
               condition: succeededOrFailed()
+
+          - task: CopyPublishBuildArtifacts@1
+            displayName: 'Publish artifacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
