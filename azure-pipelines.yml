@@ -17,18 +17,11 @@ stages:
       - job: Build
         displayName: Build
         steps:
-          - task: CopyFiles@2
-            displayName: 'copy le script PS'
+          - task: CopyFiles@2      
+            displayName: 'copy fichier Powershell'
             inputs:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
                 **/rg.ps1
               TargetFolder: '$(build.artifactstagingdirectory)'
-              condition: succeededOrFailed()
-
-          - task: CopyPublishBuildArtifacts@1
-            displayName: 'Publish artifacts'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: 'drop'
-              publishLocation: 'Container'
+            condition: succeededOrFailed()
