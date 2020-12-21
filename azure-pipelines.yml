@@ -29,4 +29,4 @@ stages:
                   New-AzResourceGroup -name $(rgName) -location $(location)
                 }
               azurePowerShellVersion: 'LatestVersion'
-              errorActionPreference: 'stop'
+              errorActionPreference: 'silentlyContinue'
