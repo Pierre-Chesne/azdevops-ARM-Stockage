@@ -1,19 +1,32 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+# 
 
 trigger:
-- main
+- dev
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  location: "westeurope"
+  rgName: "RG-azdevops-ARM-Stockage"
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+  - stage: Build
+    displayName: 'Build Infra Stockage'
+    jobs:
+      - job: Build
+        displayName: Build
+        steps:
+          - task: AzurePowerShell@5
+            displayName: 'Creation du resource group'
+            inputs:
+              azureSubscription: 'Connexion-Abonnement-Azure'
+              ScriptType: 'InlineScript'
+              Inline: |
+                $rg = Get-AzResourceGroup -name $(rgName) -location $(location)
+                if($rg -eq $null)
+                {
+                  New-AzResourceGroup -name $(rgName) -location $(location)
+                }
+              azurePowerShellVersion: 'LatestVersion'
+              errorActionPreference: 'stop'
