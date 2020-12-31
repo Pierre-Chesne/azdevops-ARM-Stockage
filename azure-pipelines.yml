@@ -4,7 +4,7 @@ trigger:
 - dev
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 variables:
   location: "westeurope"
@@ -36,8 +36,29 @@ stages:
             condition: succeededOrFailed()
 
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artefact'
+            displayName: 'Publish artifacts'
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
               ArtifactName: 'drop'
               publishLocation: 'Container'
+  
+  - stage: Deployment
+    displayName: 'Test Deployment'
+    condition: succeeded()
+    dependsOn: Build
+    jobs:
+      - deployment: Deployment
+        pool:
+          vmImage: 'windows-latest'
+        environment: Dev
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzurePowerShell@5
+                  inputs:
+                    azureSubscription: 'Connexion-Abonnement-Azure'
+                    ScriptPath: '$(Build.ArtifactStagingDirectory)\PowerShell\rg.ps1'
+                    azurePowerShellVersion: 'LatestVersion'
+
+
