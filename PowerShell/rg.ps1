@@ -1,1 +1,1 @@
-New-AzResourceGroup
+New-AzResourceGroup -name $(rgName) -location $(location)

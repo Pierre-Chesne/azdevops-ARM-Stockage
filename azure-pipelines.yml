@@ -6,10 +6,6 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-variables:
-  location: 'eastus2'
-  rgName: 'RG-azdevops-ARM-Stockage'
-
 stages:
   - stage: Build
     displayName: 'Build Infra Stockage'
@@ -51,6 +47,9 @@ stages:
         pool:
           vmImage: 'windows-latest'
         environment: Dev
+        variables:
+          location: 'eastus2'
+          rgName: 'RG-azdevops-ARM-Stockage'
         strategy:
           runOnce:
             deploy:
@@ -59,14 +58,6 @@ stages:
                   inputs:
                     azureSubscription: 'Connexion-Abonnement-Azure'
                     ScriptType: 'FilePath'
-                    ScriptPath: '$(Pipeline.Workspace)\drop\PowerShell\rg.ps1'
-                    ScriptArguments: 
-                      -name rgtoto `
-                      -location eastus2
+                    ScriptPath: '$(Pipeline.Workspace)\drop\PowerShell\rg.ps1'                    
                     errorActionPreference: 'Continue'
                     azurePowerShellVersion: 'LatestVersion'
-                
-
-
-
-
