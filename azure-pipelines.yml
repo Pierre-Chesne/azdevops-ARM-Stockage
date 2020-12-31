@@ -58,26 +58,12 @@ stages:
                 - task: AzurePowerShell@5
                   inputs:
                     azureSubscription: 'Connexion-Abonnement-Azure'
-                    ScriptType: 'InlineScript'
-                    Inline: |
-                      $rg = Get-AzResourceGroup -Name $(rgName) -location $(location)
-                      if($rg -eq $null)
-                      {
-                        New-AzResourceGroup -name $(rgName) -location $(location)
-                      }
+                    ScriptType: 'FilePath'
+                    ScriptPath: '$(Pipeline.Workspace)\drop\PowerShell\rg.ps1'
                     errorActionPreference: 'Continue'
                     azurePowerShellVersion: 'LatestVersion'
                 
-                - task: AzureResourceManagerTemplateDeployment@3
-                  inputs:
-                    deploymentScope: 'Resource Group'
-                    azureResourceManagerConnection: 'Connexion-Abonnement-Azure'
-                    action: 'Create Or Update Resource Group'
-                    resourceGroupName: '$(rgName)'
-                    templateLocation: 'Linked artifact'
-                    csmFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.json'
-                    csmParametersFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.paramters.json'
-                    deploymentMode: 'Incremental'
+
 
 
 
