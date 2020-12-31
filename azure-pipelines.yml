@@ -1,5 +1,4 @@
 # Simple démo
-
 trigger:
 - dev
 
@@ -7,15 +6,14 @@ variables:
   location: 'westeurope'
   rgName: 'RG-azdevops-ARM-Stockage'
 
-pool:
-  vmImage: 'windows-latest'
-
 stages:
   - stage: Build
     displayName: 'Build Infra Stockage'
     jobs:
       - job: Build
         displayName: Build le Template ARM
+        pool:
+          vmImage: 'windows-latest'
         steps:          
           - task: CopyFiles@2
             displayName: 'copy templates ARM'
