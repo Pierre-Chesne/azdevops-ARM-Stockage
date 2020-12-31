@@ -65,6 +65,6 @@ stages:
                     resourceGroupName: '$(rgName)'
                     location: '$(location)'
                     templateLocation: 'Linked artifact'
-                    csmFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.json'
-                    csmParametersFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.parameters.json'
+                    csmFile: '$(Pipeline.Workspace)/drop/ARM/azuredeploy.json'
+                    csmParametersFile: '$(Pipeline.Workspace)/drop/ARM/azuredeploy.parameters.json'
                     deploymentMode: 'Incremental'                    
