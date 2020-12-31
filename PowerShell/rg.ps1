@@ -1,1 +1,1 @@
-New-AzResourceGroup -name 'rg-test-peter' -location 'westeurope'
+New-AzResourceGroup -name $(rgName) -location $(location)
