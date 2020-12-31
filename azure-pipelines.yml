@@ -13,7 +13,7 @@ stages:
       - job: Build
         displayName: Build le Template ARM
         pool:
-          vmImage: 'linux-latest'
+          vmImage: 'ubuntu-latest'
         steps:          
           - task: CopyFiles@2
             displayName: 'copy templates ARM'
@@ -38,7 +38,7 @@ stages:
     jobs:
       - deployment: Deployment
         pool:
-          vmImage: 'linux-latest'
+          vmImage: 'ubuntu-latest'
         environment: Dev
         strategy:
           runOnce:
