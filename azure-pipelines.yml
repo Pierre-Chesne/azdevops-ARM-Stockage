@@ -33,4 +33,11 @@ stages:
               Contents: |
                 **/*.json
               TargetFolder: '$(build.artifactstagingdirectory)'
-            condition: succeededOrFailed()    
+            condition: succeededOrFailed()
+            
+          - task: CopyPublishBuildArtifacts@1
+            displayName: 'Publication des Artefacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
