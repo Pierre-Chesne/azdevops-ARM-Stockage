@@ -58,6 +58,7 @@ stages:
                 - task: AzurePowerShell@5
                   inputs:
                     azureSubscription: 'Connexion-Abonnement-Azure'
+                    ScriptType: FilePath
                     ScriptPath: '$(Build.ArtifactStagingDirectory)\PowerShell\rg.ps1'
                     azurePowerShellVersion: 'LatestVersion'
 
