@@ -4,7 +4,7 @@ trigger:
 - dev
 
 variables:
-  location: 'eastus2'
+  location: 'westeurope'
   rgName: 'RG-azdevops-ARM-Stockage'
 
 pool:
@@ -16,16 +16,7 @@ stages:
     jobs:
       - job: Build
         displayName: Build
-        steps:
-          - task: CopyFiles@2      
-            displayName: 'copy fichier Powershell'
-            inputs:
-              SourceFolder: '$(Build.SourcesDirectory)'
-              Contents: |
-                **/rg.ps1
-              TargetFolder: '$(build.artifactstagingdirectory)'
-            condition: succeededOrFailed()
-          
+        steps:          
           - task: CopyFiles@2
             displayName: 'copy templates ARM'
             inputs:
@@ -67,3 +58,16 @@ stages:
                       }              
                     errorActionPreference: 'Continue'
                     azurePowerShellVersion: 'LatestVersion'
+
+                - task: AzureResourceManagerTemplateDeployment@3
+                  inputs:
+                    deploymentScope: 'Resource Group'
+                    azureResourceManagerConnection: 'Connexion-Abonnement-Azure'
+                    subscriptionId: '95014b70-0907-44b9-a33f-229e4842ae85'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(rgName)'
+                    location: '$(location)'
+                    templateLocation: 'Linked artifact'
+                    csmFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.json'
+                    csmParametersFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.parameters.json'
+                    deploymentMode: 'Incremental'                    
