@@ -1,1 +1,5 @@
-New-AzResourceGroup -name 'rg-toto' -location 'westeurope'
+$rg = Get-AzResourceGroup -Name $(rgName) -location $(location)
+if($rg -eq $null)
+{
+    New-AzResourceGroup -name $(rgName) -location $(location)
+}
