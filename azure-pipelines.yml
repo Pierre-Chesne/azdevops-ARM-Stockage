@@ -24,4 +24,13 @@ stages:
               Contents: |
                 **/rg.ps1
               TargetFolder: '$(build.artifactstagingdirectory)'
-            condition: succeededOrFailed()   
+            condition: succeededOrFailed()
+          
+          - task: CopyFiles@2
+            displayName: 'copy templates ARM'
+            inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'
+              Contents: |
+                **/*.json
+              TargetFolder: '$(build.artifactstagingdirectory)'
+            condition: succeededOrFailed()    
