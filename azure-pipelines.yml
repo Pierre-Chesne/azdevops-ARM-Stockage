@@ -1,4 +1,4 @@
-# test
+# Simple démo
 
 trigger:
 - dev
@@ -15,7 +15,7 @@ stages:
     displayName: 'Build Infra Stockage'
     jobs:
       - job: Build
-        displayName: Build
+        displayName: Build le Template ARM
         steps:          
           - task: CopyFiles@2
             displayName: 'copy templates ARM'
@@ -34,7 +34,7 @@ stages:
               publishLocation: 'Container'
   
   - stage: Deployment
-    displayName: 'Test Deployment'
+    displayName: 'Test de Deployment'
     condition: succeeded()
     dependsOn: Build
     jobs:
@@ -62,8 +62,7 @@ stages:
                 - task: AzureResourceManagerTemplateDeployment@3
                   inputs:
                     deploymentScope: 'Resource Group'
-                    azureResourceManagerConnection: 'Connexion-Abonnement-Azure'
-                    #subscriptionId: '95014b70-0907-44b9-a33f-229e4842ae85'
+                    azureResourceManagerConnection: 'Connexion-Abonnement-Azure'                    
                     action: 'Create Or Update Resource Group'
                     resourceGroupName: '$(rgName)'
                     location: '$(location)'
