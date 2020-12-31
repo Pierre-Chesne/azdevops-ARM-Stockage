@@ -67,6 +67,17 @@ stages:
                       }
                     errorActionPreference: 'Continue'
                     azurePowerShellVersion: 'LatestVersion'
+                
+                - task: AzureResourceManagerTemplateDeployment@3
+                  inputs:
+                    deploymentScope: 'Resource Group'
+                    azureResourceManagerConnection: 'Connexion-Abonnement-Azure'
+                    action: 'Create Or Update Resource Group'
+                    resourceGroupName: '$(rgName)'
+                    templateLocation: 'Linked artifact'
+                    csmFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.json'
+                    csmParametersFile: '$(Pipeline.Workspace)\drop\ARM\azuredeploy.paramtersjson'
+                    deploymentMode: 'Incremental'
 
 
 
