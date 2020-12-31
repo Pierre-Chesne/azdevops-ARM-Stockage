@@ -60,6 +60,9 @@ stages:
                     azureSubscription: 'Connexion-Abonnement-Azure'
                     ScriptType: 'FilePath'
                     ScriptPath: '$(Pipeline.Workspace)\drop\PowerShell\rg.ps1'
+                    ScriptArguments: 
+                      -name rgtoto `
+                      -location eastus2
                     errorActionPreference: 'Continue'
                     azurePowerShellVersion: 'LatestVersion'
                 
