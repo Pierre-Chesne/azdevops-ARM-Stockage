@@ -28,7 +28,7 @@ stages:
               csmFile: '$(Build.SourcesDirectory)/ARM/azuredeploy.json'
               csmParametersFile: '$(Build.SourcesDirectory)/ARM/azuredeploy.parameters.json'
               deploymentMode: 'Validation'
-                  
+
           - task: CopyFiles@2
             displayName: 'copy templates ARM'
             inputs:
@@ -36,7 +36,7 @@ stages:
               Contents: |
                 **/*.json
               TargetFolder: '$(build.artifactstagingdirectory)'
-            condition: succeededOrFailed()
+            #condition: succeededOrFailed()
             
           - task: PublishBuildArtifacts@1
             displayName: 'Publish artifacts'
