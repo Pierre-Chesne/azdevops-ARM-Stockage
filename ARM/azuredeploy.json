@@ -34,7 +34,7 @@
         },
         "tags": {
           "Cost Center": "[parameters('numCostCenter')]"
-        }
+        },
       }
     ],
     "outputs": {}
