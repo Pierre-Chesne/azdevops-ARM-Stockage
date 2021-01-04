@@ -14,22 +14,7 @@ stages:
         displayName: Build le Template ARM
         pool:
           vmImage: 'ubuntu-latest'
-        steps:          
-          - task: CopyFiles@2
-            displayName: 'copy templates ARM'
-            inputs:
-              SourceFolder: '$(Build.SourcesDirectory)'
-              Contents: |
-                **/*.json
-              TargetFolder: '$(build.artifactstagingdirectory)'
-            condition: succeededOrFailed()
-
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifacts'
-            inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-              ArtifactName: 'drop'
-              publishLocation: 'Container'
+        steps:
 
           - task: AzureResourceManagerTemplateDeployment@3
             displayName: 'Test du template ARM'
@@ -42,9 +27,24 @@ stages:
               templateLocation: 'Linked artifact'
               csmFile: '$(Build.SourcesDirectory)/ARM/azuredeploy.json'
               csmParametersFile: '$(Build.SourcesDirectory)/ARM/azuredeploy.parameters.json'
-              deploymentMode: 'Validation'               
+              deploymentMode: 'Validation'
+                  
+          - task: CopyFiles@2
+            displayName: 'copy templates ARM'
+            inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'
+              Contents: |
+                **/*.json
+              TargetFolder: '$(build.artifactstagingdirectory)'
+            condition: succeededOrFailed()
+            
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish artifacts'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
 
-  
   - stage: Deployment
     displayName: 'Test de Deployment'
     condition: succeeded()
