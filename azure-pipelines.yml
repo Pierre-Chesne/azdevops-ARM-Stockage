@@ -35,8 +35,7 @@ stages:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: |
                 **/*.json
-              TargetFolder: '$(build.artifactstagingdirectory)'
-            #condition: succeededOrFailed()
+              TargetFolder: '$(build.artifactstagingdirectory)'            
             
           - task: PublishBuildArtifacts@1
             displayName: 'Publish artifacts'
