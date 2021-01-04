@@ -30,6 +30,20 @@ stages:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
               ArtifactName: 'drop'
               publishLocation: 'Container'
+
+          - task: AzureResourceManagerTemplateDeployment@3
+            displayName: 'Test du template ARM'
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: 'Connexion-Abonnement-Azure'                    
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(rgName)'
+              location: '$(location)'
+              templateLocation: 'Linked artifact'
+              csmFile: '$(Pipeline.Workspace)/drop/ARM/azuredeploy.json'
+              csmParametersFile: '$(Pipeline.Workspace)/drop/ARM/azuredeploy.parameters.json'
+              deploymentMode: 'Validation'               
+
   
   - stage: Deployment
     displayName: 'Test de Deployment'
@@ -39,7 +53,7 @@ stages:
       - deployment: Deployment
         pool:
           vmImage: 'ubuntu-latest'
-        #environment: Dev
+        environment: Dev
         strategy:
           runOnce:
             deploy:
