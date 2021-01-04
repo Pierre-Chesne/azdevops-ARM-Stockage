@@ -40,8 +40,8 @@ stages:
               resourceGroupName: '$(rgName)'
               location: '$(location)'
               templateLocation: 'Linked artifact'
-              csmFile: '$(Pipeline.Workspace)/drop/ARM/azuredeploy.json'
-              csmParametersFile: '$(Pipeline.Workspace)/drop/ARM/azuredeploy.parameters.json'
+              csmFile: '$(Build.SourcesDirectory)/ARM/azuredeploy.json'
+              csmParametersFile: '$(Build.SourcesDirectory)/ARM/azuredeploy.parameters.json'
               deploymentMode: 'Validation'               
 
   
